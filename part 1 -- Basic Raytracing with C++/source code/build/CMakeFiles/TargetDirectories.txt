@@ -1,0 +1,3 @@
+/home/gugubird/projects/EzRT/part 1 -- Basic Raytracing with C++/source code/build/CMakeFiles/main.dir
+/home/gugubird/projects/EzRT/part 1 -- Basic Raytracing with C++/source code/build/CMakeFiles/edit_cache.dir
+/home/gugubird/projects/EzRT/part 1 -- Basic Raytracing with C++/source code/build/CMakeFiles/rebuild_cache.dir

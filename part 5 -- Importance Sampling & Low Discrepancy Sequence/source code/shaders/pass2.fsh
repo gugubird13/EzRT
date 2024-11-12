@@ -1,4 +1,4 @@
-#version 330 core
+#version 420 core
 
 in vec3 pix;
 out vec4 fragColor;
@@ -12,5 +12,5 @@ uniform sampler2D texPass5;
 uniform sampler2D texPass6;
 
 void main() {
-    gl_FragData[0] = vec4(texture2D(texPass0, pix.xy*0.5+0.5).rgb, 1.0);
+    fragColor = vec4(texture(texPass0, pix.xy*0.5+0.5).rgb, 1.0);
 }

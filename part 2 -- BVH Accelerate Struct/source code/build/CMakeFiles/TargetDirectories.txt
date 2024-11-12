@@ -1,0 +1,3 @@
+/home/gugubird/projects/EzRT/part 2 -- BVH Accelerate Struct/source code/build/CMakeFiles/main.dir
+/home/gugubird/projects/EzRT/part 2 -- BVH Accelerate Struct/source code/build/CMakeFiles/edit_cache.dir
+/home/gugubird/projects/EzRT/part 2 -- BVH Accelerate Struct/source code/build/CMakeFiles/rebuild_cache.dir

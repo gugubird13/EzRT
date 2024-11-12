@@ -13,7 +13,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <SOIL2/SOIL2.h>
+// #include <SOIL2/SOIL2.h>
 
 
 #include "lib/hdrloader.h"
@@ -689,16 +689,16 @@ int main(int argc, char** argv) {
 
     Material m;
     m.baseColor = vec3(1, 1, 1);
-    readObj("models/Stanford Bunny.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.3, -1.6, 0), vec3(1.5, 1.5, 1.5)),true);
+    readObj(".././models/Stanford Bunny.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.3, -1.6, 0), vec3(1.5, 1.5, 1.5)),true);
     //readObj("models/room.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.0, -2.5, 0), vec3(10, 10, 10)), true);
 
     m.baseColor = vec3(0.725, 0.71, 0.68);
-    readObj("models/quad.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -1.4, 0), vec3(18.83, 0.01, 18.83)), false);
+    readObj(".././models/quad.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -1.4, 0), vec3(18.83, 0.01, 18.83)), false);
 
     m.baseColor = vec3(1, 1, 1);
     m.emissive = vec3(30, 20, 10);
     //readObj("models/quad.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.0, 1.38, -0.0), vec3(0.7, 0.01, 0.7)), false);
-    readObj("models/sphere.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.0, 0.9, -0.0), vec3(1,1, 1)), false);
+    readObj(".././models/sphere.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.0, 0.9, -0.0), vec3(1,1, 1)), false);
 
     int nTriangles = triangles.size();
     std::cout << "模型读取完成: 共 " << nTriangles << " 个三角形" << std::endl;
@@ -771,7 +771,7 @@ int main(int argc, char** argv) {
 
     // hdr 全景图
     HDRLoaderResult hdrRes;
-    bool r = HDRLoader::load("./HDR/sunset.hdr", hdrRes);
+    bool r = HDRLoader::load(".././HDR/sunset.hdr", hdrRes);
     hdrMap = getTextureRGB32F(hdrRes.width, hdrRes.height);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, hdrRes.width, hdrRes.height, 0, GL_RGB, GL_FLOAT, hdrRes.cols);
 
@@ -779,7 +779,7 @@ int main(int argc, char** argv) {
 
     // 管线配置
 
-    pass1.program = getShaderProgram("./shaders/fshader.fsh", "./shaders/vshader.vsh");
+    pass1.program = getShaderProgram(".././shaders/fshader.fsh", ".././shaders/vshader.vsh");
     //pass1.width = pass1.height = 256;
     pass1.colorAttachments.push_back(getTextureRGB32F(pass1.width, pass1.height));
     pass1.colorAttachments.push_back(getTextureRGB32F(pass1.width, pass1.height));
@@ -793,12 +793,12 @@ int main(int argc, char** argv) {
     glUniform1i(glGetUniformLocation(pass1.program, "height"), pass1.height);
     glUseProgram(0);
 
-    pass2.program = getShaderProgram("./shaders/pass2.fsh", "./shaders/vshader.vsh");
+    pass2.program = getShaderProgram(".././shaders/pass2.fsh", ".././shaders/vshader.vsh");
     lastFrame = getTextureRGB32F(pass2.width, pass2.height);
     pass2.colorAttachments.push_back(lastFrame);
     pass2.bindData();
 
-    pass3.program = getShaderProgram("./shaders/pass3.fsh", "./shaders/vshader.vsh");
+    pass3.program = getShaderProgram(".././shaders/pass3.fsh", ".././shaders/vshader.vsh");
     pass3.bindData(true);
 
 

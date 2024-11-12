@@ -1,4 +1,4 @@
-#version 330 core
+#version 420 core
 
 in vec3 pix;
 out vec4 fragColor;
@@ -365,7 +365,7 @@ vec2 SampleSphericalMap(vec3 v) {
 // 获取 HDR 环境颜色
 vec3 sampleHdr(vec3 v) {
     vec2 uv = SampleSphericalMap(normalize(v));
-    vec3 color = texture2D(hdrMap, uv).rgb;
+    vec3 color = texture(hdrMap, uv).rgb;
     //color = min(color, vec3(10));
     return color;
 }
@@ -542,9 +542,9 @@ void main() {
     }  
     
     // 和上一帧混合
-    vec3 lastColor = texture2D(lastFrame, pix.xy*0.5+0.5).rgb;
+    vec3 lastColor = texture(lastFrame, pix.xy*0.5+0.5).rgb;
     color = mix(lastColor, color, 1.0/float(frameCounter+1));
 
     // 输出
-    gl_FragData[0] = vec4(color, 1.0);
+    fragColor = vec4(color, 1.0);
 }

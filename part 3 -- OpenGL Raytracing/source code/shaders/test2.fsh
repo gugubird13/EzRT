@@ -1,4 +1,4 @@
-#version 330 core
+#version 420 core
 
 in vec3 pix;
 out vec4 fragColor;
@@ -16,7 +16,7 @@ void main() {
     vec3 color;
     
     if(pix.x>0 && pix.y>0)
-        color = texture2D(texPass0, pix.xy).rgb;
+        color = texture(texPass0, pix.xy).rgb;
     
     fragColor = vec4(color, 1.0);
 }

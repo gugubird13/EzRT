@@ -807,7 +807,7 @@ int main(int argc, char** argv) {
     m.clearcoat = 1.0;
     m.clearcoatGloss = 0.0;
     m.baseColor = vec3(1, 0.73, 0.25);
-    readObj("models/teapot.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.5, 0), vec3(0.75, 0.75, 0.75)), true);
+    readObj(".././models/teapot.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.5, 0), vec3(0.75, 0.75, 0.75)), true);
     //readObj("models/sphere2.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.1, 0), vec3(0.75, 0.75, 0.75)), true);
     //readObj("models/AnyConv.com__dragon_vrip_res2.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.1, -0.9, 0), vec3(1.75, 1.75, 1.75)), true);
     
@@ -816,7 +816,7 @@ int main(int argc, char** argv) {
     m.specular = 1.0;
     m.baseColor = vec3(1, 1, 1);
     float len = 13000.0;
-    readObj("models/quad.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.5, 0), vec3(len, 0.01, len)), false);
+    readObj(".././models/quad.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.5, 0), vec3(len, 0.01, len)), false);
     
     m.baseColor = vec3(1, 1, 1);
     m.emissive = vec3(20, 20, 20);
@@ -894,7 +894,7 @@ int main(int argc, char** argv) {
 
     // hdr 全景图
     HDRLoaderResult hdrRes;
-    bool r = HDRLoader::load("./HDR/chinese_garden_2k.hdr", hdrRes);
+    bool r = HDRLoader::load(".././HDR/chinese_garden_2k.hdr", hdrRes);
     hdrMap = getTextureRGB32F(hdrRes.width, hdrRes.height);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, hdrRes.width, hdrRes.height, 0, GL_RGB, GL_FLOAT, hdrRes.cols);
 
@@ -909,7 +909,7 @@ int main(int argc, char** argv) {
 
     // 管线配置
 
-    pass1.program = getShaderProgram("./shaders/fshader.fsh", "./shaders/vshader.vsh");
+    pass1.program = getShaderProgram(".././shaders/fshader.fsh", ".././shaders/vshader.vsh");
     //pass1.width = pass1.height = 256;
     pass1.colorAttachments.push_back(getTextureRGB32F(pass1.width, pass1.height));
     pass1.colorAttachments.push_back(getTextureRGB32F(pass1.width, pass1.height));
@@ -923,12 +923,12 @@ int main(int argc, char** argv) {
     glUniform1i(glGetUniformLocation(pass1.program, "height"), pass1.height);
     glUseProgram(0);
 
-    pass2.program = getShaderProgram("./shaders/pass2.fsh", "./shaders/vshader.vsh");
+    pass2.program = getShaderProgram(".././shaders/pass2.fsh", ".././shaders/vshader.vsh");
     lastFrame = getTextureRGB32F(pass2.width, pass2.height);
     pass2.colorAttachments.push_back(lastFrame);
     pass2.bindData();
 
-    pass3.program = getShaderProgram("./shaders/pass3.fsh", "./shaders/vshader.vsh");
+    pass3.program = getShaderProgram(".././shaders/pass3.fsh", ".././shaders/vshader.vsh");
     pass3.bindData(true);
 
 

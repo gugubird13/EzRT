@@ -25,8 +25,13 @@ target_include_directories(main PRIVATE include)
 # dependency
 find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
-find_package(GLM REQUIRED)
+find_package(glm REQUIRED)
 
 # link
 target_link_libraries(main PRIVATE GLUT::GLUT)
 target_link_libraries(main PRIVATE GLEW::GLEW)
+# target_link_libraries(main PRIVATE OpenMP::OpenMP)
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(main PRIVATE OpenMP::OpenMP_CXX)
+endif()

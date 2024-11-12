@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <glm/glm.hpp>  // 数学库支持
 #include "svpng.inc"    // png输出 ref: https://github.com/miloyip/svpng
+#include <cstring>
 #include <omp.h>    // openmp多线程加速
 
 using namespace glm;
@@ -177,8 +178,7 @@ void imshow(double* SRC)
     unsigned char* p = image;
     double* S = SRC;    // 源数据
 
-    FILE* fp;
-    fopen_s(&fp, "image.png", "wb");
+    FILE* fp = fopen("image.png", "wb");
 
     for (int i = 0; i < HEIGHT; i++)
     {
@@ -313,7 +313,6 @@ int main()
     Sphere s3 = Sphere(vec3(0.65, 0.1, 0.0), 0.3, BLUE);
     s1.material.specularRate = 0.3;
     s1.material.roughness = 0.1;
-
     s2.material.specularRate = 0.3;
     s2.material.refractRate = 0.95;
     s2.material.refractAngle = 0.1;
@@ -361,12 +360,15 @@ int main()
     
     
     double* image = new double[WIDTH * HEIGHT * 3];
+    cout << "WIDTH: " << WIDTH << ", HEIGHT: " << HEIGHT << endl;
+
     memset(image, 0.0, sizeof(double) * WIDTH * HEIGHT * 3);
 
     omp_set_num_threads(50); // 线程个数
     #pragma omp parallel for
     for (int k = 0; k < SAMPLE; k++)
     {
+        cout << "sample: " << k << endl;
         double* p = image;
         for (int i = 0; i < HEIGHT; i++)
         {
@@ -437,8 +439,6 @@ int main()
             }
         }
     }
-    
     imshow(image);
-
     return 0;
 }

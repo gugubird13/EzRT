@@ -1,4 +1,4 @@
-#version 430 core
+#version 420 core
 
 in vec3 pix;
 out vec4 fragColor;
@@ -665,7 +665,7 @@ vec3 SampleBRDF(float xi_1, float xi_2, float xi_3, vec3 V, vec3 N, in Material 
 
 // 采样预计算的 HDR cache
 vec3 SampleHdr(float xi_1, float xi_2) {
-    vec2 xy = texture2D(hdrCache, vec2(xi_1, xi_2)).rg; // x, y
+    vec2 xy = texture(hdrCache, vec2(xi_1, xi_2)).rg; // x, y
     xy.y = 1.0 - xy.y; // flip y
 
     // 获取角度
@@ -692,7 +692,7 @@ vec2 toSphericalCoord(vec3 v) {
 // 获取 HDR 环境颜色
 vec3 hdrColor(vec3 L) {
     vec2 uv = toSphericalCoord(normalize(L));
-    vec3 color = texture2D(hdrMap, uv).rgb;
+    vec3 color = texture(hdrMap, uv).rgb;
     return color;
 }
 
@@ -701,7 +701,7 @@ vec3 hdrColor(vec3 L) {
 float hdrPdf(vec3 L, int hdrResolution) {
     vec2 uv = toSphericalCoord(normalize(L));   // 方向向量转 uv 纹理坐标
 
-    float pdf = texture2D(hdrCache, uv).b;      // 采样概率密度
+    float pdf = texture(hdrCache, uv).b;      // 采样概率密度
     float theta = PI * (0.5 - uv.y);            // theta 范围 [-pi/2 ~ pi/2]
     float sin_theta = max(sin(theta), 1e-10);
 
@@ -894,23 +894,23 @@ vec3 pathTracingImportanceSampling(HitResult hit, int maxBounce) {
 void main() {
     /*
     if(pix.y>0) {
-        fragColor = texture2D(hdrMap, vec2(pix.x*0.5+0.5, 1-pix.y));
+        fragColor = texture(hdrMap, vec2(pix.x*0.5+0.5, 1-pix.y));
     } else {
-        fragColor = texture2D(hdrCache, vec2(pix.x*0.5+0.5, -pix.y));
+        fragColor = texture(hdrCache, vec2(pix.x*0.5+0.5, -pix.y));
     }
     */
 
     // 输出亮度
     /*
-    float pdf = texture2D(hdrCache, vec2(pix.x*0.5+0.5, -pix.y*0.5+0.5)).b;
+    float pdf = texture(hdrCache, vec2(pix.x*0.5+0.5, -pix.y*0.5+0.5)).b;
     fragColor = vec4(pdf) * 100000;
     
-    fragColor = texture2D(hdrMap, vec2(pix.x*0.5+0.5, -pix.y*0.5+0.5));
+    fragColor = texture(hdrMap, vec2(pix.x*0.5+0.5, -pix.y*0.5+0.5));
 
     // 采样点
     for(int i=0; i<500; i++) {
         vec2 uv =sobolVec2(i+1, 0); // 取 1,2 维度的 sobol 数做随机数
-        vec2 texcoord = texture2D(hdrCache, uv).rg;
+        vec2 texcoord = texture(hdrCache, uv).rg;
         texcoord.y = 1.0 - texcoord.y;
         if(distance(pix.xy*0.5+0.5, texcoord)<0.005) fragColor.rgb = vec3(1, 0, 0);
     }*/
@@ -940,10 +940,10 @@ void main() {
     }
     
     // 和上一帧混合
-    vec3 lastColor = texture2D(lastFrame, pix.xy*0.5+0.5).rgb;
+    vec3 lastColor = texture(lastFrame, pix.xy*0.5+0.5).rgb;
     color = mix(lastColor, color, 1.0/float(frameCounter+1));
 
     // 输出
-    gl_FragData[0] = vec4(color, 1.0);
+    fragColor = vec4(color, 1.0);
     
 }
